@@ -9,6 +9,9 @@ import './css/style.css';
 // Models
 import Song from './models/song';
 
+// Collections
+import SongList from './collections/song_list';
+
 // Initial Set Up
 console.log('it loaded!');
 
@@ -33,13 +36,28 @@ const songData = [
   }
 ];
 
+// Create an instance of Song
 const song1 = new Song ({
   title: "Silver Lining",
   year: 2016,
   artist: "S. Mars"
 });
-
 console.log(song1);
+
+// Add song1 to song collection
+const songList = new SongList(songData);
+songList.add(song1);
+console.log(songList);
+
+// View the Collection Data
+const render = function render(songList) {
+  const $songList = $('#song-list');
+
+  songList.each((song) => {
+    $songList.append(songTemplate(song.attributes));
+  });
+};
+
 
 //WHY DO WE DECLARE IT OUTSIDE OF DOC READY?
 let songTemplate;
@@ -49,6 +67,7 @@ $(document).ready( () => {
 
   $('#song-list').append(songTemplate(song1.attributes));
 
+  render(songList);
 });
 
 // $(document).ready(() => {
